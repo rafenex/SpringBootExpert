@@ -1,7 +1,12 @@
 package com.example.demo;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
+import com.example.demo.domain.entity.Pedido;
+import com.example.demo.domain.repository.Pedidos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,20 +20,27 @@ import com.example.demo.domain.repository.Clientes;
 public class VendasApplication {
 	
 	@Bean
-	public CommandLineRunner init(@Autowired Clientes clientes) {
+	public CommandLineRunner init(@Autowired Clientes clientes,
+								  @Autowired Pedidos pedidos
+					) {
 		return args -> {
 			System.out.println("Salvando clientes");
 			Cliente cliente = new Cliente();
 			cliente.setNome("Rafael");
 			clientes.save(cliente);
-			Cliente cliente2 = new Cliente();
-			cliente2.setNome("Rodrigos");
-			clientes.save(cliente2);
-			
-			List<Cliente> result = clientes.encontrarPorNome("Rodrigo");
-			result.forEach(System.out::println);
-			//boolean existe =  clientes.existsByNomeLike("%Rodrigo%");
-			//System.out.println("Existe um cliente chamdo Rodrigo?" + existe);
+
+
+			Pedido p = new Pedido();
+			p.setCliente(cliente);
+			p.setDataPedido(LocalDate.now());
+			p.setTotal(BigDecimal.valueOf(100));
+			pedidos.save(p);
+
+			pedidos.findByCliente(cliente).forEach(System.out::println);
+
+
+
+
 
 
 		};

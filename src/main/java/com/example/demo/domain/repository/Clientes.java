@@ -23,4 +23,9 @@ public interface Clientes extends JpaRepository<Cliente, Integer> {
     Cliente findOneByNome(String nome);
 
     boolean existsByNomeLike(String nome);
+
+    @Query("select c from Cliente c left join fetch c.pedidos p where c.id = :id ")
+    Cliente findClienteFetchPedidos(Integer id);
+
+
 }
