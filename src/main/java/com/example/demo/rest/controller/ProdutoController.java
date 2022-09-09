@@ -31,6 +31,8 @@ public class ProdutoController {
 
     }
 
+
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Produto save (@RequestBody @Valid Produto produto){
@@ -49,18 +51,6 @@ public class ProdutoController {
                 (HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Integer id,
-                       @RequestBody @Valid Produto produto){
-        produtoRepository.findById(id).map(
-                produtoExistente -> {
-                    produto.setId(produtoExistente.getId());
-                    produtoRepository.save(produto);
-                    return produtoExistente;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
     @GetMapping
     public ResponseEntity find (Produto filtro){
         ExampleMatcher matcher = ExampleMatcher
@@ -73,5 +63,7 @@ public class ProdutoController {
         return ResponseEntity.ok(lista);
 
     }
+
+
 
 }
