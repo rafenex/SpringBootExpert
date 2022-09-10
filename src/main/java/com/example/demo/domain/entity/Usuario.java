@@ -15,7 +15,7 @@ import javax.validation.constraints.NotEmpty;
 @Builder
 @Table(name="usuario")
 public class Usuario {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column

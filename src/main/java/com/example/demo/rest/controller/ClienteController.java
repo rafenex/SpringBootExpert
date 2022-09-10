@@ -2,6 +2,10 @@ package com.example.demo.rest.controller;
 
 import com.example.demo.domain.entity.Cliente;
 import com.example.demo.domain.repository.Clientes;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -12,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.List;
 
+@Api("Api Clientes")
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController {
@@ -24,6 +29,9 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um cliente")
+    @ApiResponses({@ApiResponse(code=200, message = "Cliente encontrado"),
+                   @ApiResponse(code = 404, message = "Cliente não encontrado")})
     public Cliente getClienteById(@PathVariable Integer id){
         return clienteRepository
                 .findById(id)
